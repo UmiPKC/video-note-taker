@@ -1,6 +1,131 @@
-<h1>hello from the dev branch!</h1>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Video Note-Taker!</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'note_taker/main.css' %}">
+</head>
+<h1 style="color: skyblue;">{{ notebook.title }}</h1>
 
-<div>
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/Y2_B7oKYoAU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+<body>
+	<div>
+		<iframe id="your-iframe" 
+			width="560" 
+			height="315" 
+			frameborder="0"
+			style="border: solid 4px #37474F"
+			src="https://www.youtube.com/embed/Y2_B7oKYoAU?enablejsapi=1" 
+			title="YouTube video player" 
+			frameborder="0" 
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" 
+			allowfullscreen>
+		</iframe>
+	</div>
 
+	<div>
+		<!--<a href="{% url 'note-taker-create' %}"><button id="new-note-btn" onclick="newNote();">New note at ...</button></a>-->
+		<button id="new-note-btn" onclick="newNote();">New note at ...</button>
+	</div>
+	
+	{% load crispy_forms_tags %}
+	<form action="/note/new/" method="post">
+		<!--
+		{% csrf_token %}
+		{{ form }}
+		-->
+		<label for="note-timestamp">Timestamp: </label>
+		<input id="note-timestamp" type="text" name="note-timestamp"> 
+		<label for="note-content">Notes: </label>
+		<input id="note-content" type="text" name="note-content" value="Your notes here...">
+		<input type="submit" value="Done">
+	</form>
+	
+	{% for note in notes %}
+		<div style="border-bottom: 4px dotted pink;">
+			<p style="color: magenta;">{{ note.timestamp }} -- {{ note.content }}</p>
+		</div>
+	{% endfor %}
+
+	<script type="text/javascript">
+	  var tag = document.createElement('script');
+	  tag.id = 'iframe-demo';
+	  tag.src = 'https://www.youtube.com/iframe_api';
+	  var firstScriptTag = document.getElementsByTagName('script')[0];
+	  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+	  var player;
+	  function onYouTubeIframeAPIReady() {
+	    player = new YT.Player('your-iframe', {
+	        events: {
+	          'onReady': onPlayerReady,
+	          'onStateChange': onPlayerStateChange
+	        }
+	    });
+	  }
+
+	  function getVideoTime() {
+	  	var raw_time = player.getCurrentTime();
+	  	time_hour = parseInt(raw_time / 3600);
+	  	time_min = parseInt((raw_time % 3600) / 60);
+	  	time_sec = parseInt((raw_time % 3600) % 60);
+
+	  	var time_string;
+	  	var zero_colon_hour;
+	  	var zero_colon_min;
+	  	var zero_colon_sec;
+
+	  	if (time_hour >= 10) {
+	  		zero_colon_hour = "";
+	  	} else {
+	  		zero_colon_hour = "0";
+	  	}
+
+	  	if (time_min >= 10) {
+	  		zero_colon_min = ":";
+	  	} else {
+	  		zero_colon_min = ":0";
+	  	}
+
+	  	if (time_sec >= 10) {
+	  		zero_colon_sec = ":";
+	  	} else {
+	  		zero_colon_sec = ":0";
+	  	}
+
+	  	time_string = zero_colon_hour + time_hour + zero_colon_min + time_min + zero_colon_sec + time_sec;
+	  	return time_string;
+	  }
+	  
+	  function newNote() {
+	  	player.pauseVideo();
+	  	document.getElementById('note-timestamp').value = getVideoTime();
+	  }
+
+	  function onPlayerReady(event) {
+	    document.getElementById('your-iframe').style.borderColor = '#FF6D00';
+	  }
+	  function changeBorderColor(playerStatus) {
+	    var color;
+	    if (playerStatus == -1) {
+	      color = "#37474F"; // unstarted = gray
+	    } else if (playerStatus == 0) {
+	      color = "#FFFF00"; // ended = yellow
+	    } else if (playerStatus == 1) {
+	      color = "#33691E"; // playing = green
+	    } else if (playerStatus == 2) {
+	      color = "#DD2C00"; // paused = red
+	    } else if (playerStatus == 3) {
+	      color = "#AA00FF"; // buffering = purple
+	    } else if (playerStatus == 5) {
+	      color = "#FF6DOO"; // video cued = orange
+	    }
+	    if (color) {
+	      document.getElementById('your-iframe').style.borderColor = color;
+	    }
+	  }
+	  function onPlayerStateChange(event) {
+	    changeBorderColor(event.data);
+	  }
+	</script>
+</body>
+</html>
