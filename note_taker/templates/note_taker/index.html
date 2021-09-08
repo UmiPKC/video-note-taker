@@ -5,6 +5,7 @@
 	<title>Video Note-Taker!</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'note_taker/main.css' %}">
 </head>
+<a href="{% url 'note-taker-create' %}">Create note</a>
 <h1 style="color: skyblue;">{{ notebook.title }}</h1>
 
 <body>
@@ -28,15 +29,22 @@
 	</div>
 	
 	{% load crispy_forms_tags %}
-	<form action="/note/new/" method="post">
-		<!--
+	<form action="" method="post">
 		{% csrf_token %}
-		{{ form }}
-		-->
-		<label for="note-timestamp">Timestamp: </label>
-		<input id="note-timestamp" type="text" name="note-timestamp"> 
-		<label for="note-content">Notes: </label>
-		<input id="note-content" type="text" name="note-content" value="Your notes here...">
+		<!--{{ form|crispy }} -->
+			
+		<label for="{{ form.timestamp.id_for_label }}">Timestamp:</label>
+		<input type="text" name="timestamp" maxlength="100" class="textinput textInput form-control" required id="id_timestamp">
+
+		<label for="{{ form.content.id_for_label }}">Content:</label>
+		<textarea name="content" cols="40" rows="1" class="textarea form-control" required id="id_content"></textarea>
+
+		<label for="id_notebook" class=" requiredField">Notebook<span class="asteriskField">*</span></label>  
+		<select name="notebook" class="select form-control" required id="id_notebook"> 
+			<option value="" selected="">{{ notebook.title }}</option> 
+			<!-- <option value="1">Furret Notebook!</option> -->
+		</select>
+
 		<input type="submit" value="Done">
 	</form>
 	
@@ -98,7 +106,7 @@
 	  
 	  function newNote() {
 	  	player.pauseVideo();
-	  	document.getElementById('note-timestamp').value = getVideoTime();
+	  	document.getElementById('id_timestamp').value = getVideoTime();
 	  }
 
 	  function onPlayerReady(event) {

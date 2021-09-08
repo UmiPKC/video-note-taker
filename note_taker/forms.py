@@ -1,7 +1,10 @@
-from django import forms
+from django.forms import ModelForm
 from .models import Note, Notebook
 
-class NoteForm(forms.Form):
+class NoteForm(ModelForm):
+	#timestamp = forms.CharField(max_length=100)
+	#content = forms.CharField(widget=forms.Textarea)
+	#notebook = forms.CharField(max_length=100)
 	class Meta:
 		model = Note
-		fields = ['timestamp', 'content']
+		fields = ['timestamp', 'content', 'notebook']

@@ -4,5 +4,6 @@ from .views import NoteCreate
 
 urlpatterns = [
 	path('', views.home, name="note-taker-home"),
-	path('note/new/', NoteCreate.as_view(), name='note-taker-create'),
+	#path('note/new/', NoteCreate.as_view(), name='note-taker-create'),
+	path('note/new/', views.new_note, name='note-taker-create'),
 ]
