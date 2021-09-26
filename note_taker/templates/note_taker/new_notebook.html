@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Make your notebook</title>
+</head>
+<body>
+
+	<a href="{% url 'note-taker-notebook' %}">Home</a>
+	<a href="{% url 'dev-home' %}">Dev home</a> </br>
+
+	<label for="youtube_link">Youtube Video Link:</label>
+	<input type="text" id="youtube_link">
+	<button id="youtube_link_btn" onclick="fillId();">Enter</button>
+
+	{% load crispy_forms_tags %}
+	<form action="" method="post">
+		{% csrf_token %}
+		<!--{{ form }} -->
+		<label for="id_title">Title:</label>
+		<input type="text" name="title" maxlength="100" required id="id_title">
+
+		<label for="id_author">Author:</label>
+		<select name="author" required id="id_author">
+			<option value="" selected>---------</option>
+			<option value="1">umi</option>
+			<option value="2">admin</option>
+		</select>
+
+		<label for="id_youtube_id">Youtube ID:</label>
+		<input type="text" name="youtube_id" value="Y2_B7oKYoAU" maxlength="100" required id="id_youtube_id">
+
+		<label for="id_notebook_id">Youtube ID:</label>
+		<input type="text" name="notebook_id" value="{{ random_id }}" maxlength="100" required id="id_notebook_id">	
+
+		<input type="submit" value="Done">
+	</form></br>
+
+	<div id="yt_vid">
+	</div>
+
+	<script>
+		function getId(url) {
+			const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+			const match = url.match(regExp);
+
+			return (match && match[2].length === 11)
+			  ? match[2]
+			  : null;
+		}
+
+		function fillId() {
+			var link = document.getElementById("youtube_link").value;
+			var videoId = getId(link);
+			var iframeMarkup = '<iframe width="560" height="315" src="//www.youtube.com/embed/' 
+		  		+ videoId + '" frameborder="0" allowfullscreen></iframe>';
+			document.getElementById("id_youtube_id").value = videoId;
+			document.getElementById("yt_vid").innerHTML = iframeMarkup; 
+		}
+		
+		/*const iframeMarkup = '<iframe width="560" height="315" src="//www.youtube.com/embed/' 
+		  + videoId + '" frameborder="0" allowfullscreen></iframe>'; */
+	</script>
+</body>
+</html>

@@ -8,3 +8,9 @@ class NoteForm(ModelForm):
 	class Meta:
 		model = Note
 		fields = ['timestamp', 'content', 'notebook']
+
+#Create NoteBookForm
+class NotebookForm(ModelForm):
+	class Meta:
+		model = Notebook
+		fields = ['title', 'author', 'youtube_id', 'notebook_id'] #'youtube_id'
