@@ -1,0 +1,8 @@
+{% extends "note_taker/base.html" %}
+{% block content%}
+
+	{% for book in notebook %}
+		</br><a href="{% url 'note-taker-notebook-test' book.notebook_id %}">{{ book.title }}</a>
+	{% endfor %}
+
+{% endblock content %}

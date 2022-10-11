@@ -1,0 +1,35 @@
+******NEW DIRECTION as of 10/7/2022******
+--Purpose/Vision: vodreview.me; A space specifically for getting useful feedback on your VODs. Select a YouTube video of your VOD, and while watching, pause and take a note. The app will remember where you paused and automatically save the timestamp with the note you made. Later, you can go back to your VOD's 'notebook' and be able to see all your notes w/ timestamps. There will be 2 modes: Private and Public mode. With Private Mode, the VOD can only be commented on by you and other authorized users. With Public Mode, the VOD will be able to be viewed and commented on by anybody who sees it. Public Mode VODs will be organized by certain filters to make them easier to find.
+
+--Definite Features:
+---Select videos and make notes on them
+---Make these 'notebooks' public or private
+---User accounts/profiles
+---User permissions
+---Way to filter public VODs (by game?)
+
+--Components:
+---Users
+	Username
+	Password
+	Profile Picture
+	Bio
+---Notebooks/VODs
+	Title
+	Description
+	VOD
+	Author
+	Date/time created
+	Privacy setting (public or private)
+	Number of notes
+	Game
+---Notes
+	Author
+	Date/time created
+	Notebook
+	Contents
+	Number of likes?
+
+--Maybe Features:
+---Converting 'notebooks' to text format (pdf, text file, html page, ...?)
+

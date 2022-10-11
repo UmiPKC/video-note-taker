@@ -1,20 +1,14 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Video Note-Taker!</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'note_taker/main.css' %}">
-</head>
-<h1 style="color: skyblue;">{{ notebook.title }}</h1>
+{% extends "note_taker/base.html" %}
+{% block content%}
 
-<body>
+	<h1 style="color: skyblue;">{{ notebook.title }}</h1>
 	<div>
 		<iframe id="your-iframe" 
 			width="560" 
 			height="315" 
 			frameborder="0"
 			style="border: solid 4px #37474F"
-			src="https://www.youtube.com/embed/Y2_B7oKYoAU?enablejsapi=1" 
+			src="https://www.youtube.com/embed/{{ notebook.youtube_id }}?enablejsapi=1" 
 			title="YouTube video player" 
 			frameborder="0" 
 			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" 
@@ -23,20 +17,26 @@
 	</div>
 
 	<div>
-		<!--<a href="{% url 'note-taker-create' %}"><button id="new-note-btn" onclick="newNote();">New note at ...</button></a>-->
 		<button id="new-note-btn" onclick="newNote();">New note at ...</button>
 	</div>
 	
 	{% load crispy_forms_tags %}
-	<form action="/note/new/" method="post">
-		<!--
+	<form action="" method="post">
 		{% csrf_token %}
-		{{ form }}
-		-->
-		<label for="note-timestamp">Timestamp: </label>
-		<input id="note-timestamp" type="text" name="note-timestamp"> 
-		<label for="note-content">Notes: </label>
-		<input id="note-content" type="text" name="note-content" value="Your notes here...">
+		<!--{{ form|crispy }} -->
+			
+		<label for="{{ form.timestamp.id_for_label }}">Timestamp:</label>
+		<input type="text" name="timestamp" maxlength="100" class="textinput textInput form-control" required id="id_timestamp">
+
+		<label for="{{ form.content.id_for_label }}">Content:</label>
+		<textarea name="content" cols="40" rows="1" class="textarea form-control" required id="id_content"></textarea>
+
+		<label for="id_notebook" class=" requiredField">Notebook<span class="asteriskField">*</span></label>  
+		<select name="notebook" class="select form-control" required id="id_notebook"> 
+			<option value="" selected=""> ------ </option> 
+			<option value="1">{{ notebook.title }}</option> 
+		</select>
+
 		<input type="submit" value="Done">
 	</form>
 	
@@ -98,7 +98,7 @@
 	  
 	  function newNote() {
 	  	player.pauseVideo();
-	  	document.getElementById('note-timestamp').value = getVideoTime();
+	  	document.getElementById('id_timestamp').value = getVideoTime();
 	  }
 
 	  function onPlayerReady(event) {
@@ -126,6 +126,18 @@
 	  function onPlayerStateChange(event) {
 	    changeBorderColor(event.data);
 	  }
+
+	  function getId(url) {
+	    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+	    const match = url.match(regExp);
+
+	    return (match && match[2].length === 11)
+	      ? match[2]
+	      : null;
+		}
+	    
+	  const videoId = getId('http://www.youtube.com/watch?v=zbYf5_S7oJo');
+	  const iframeMarkup = '<iframe width="560" height="315" src="//www.youtube.com/embed/' 
+	      + videoId + '" frameborder="0" allowfullscreen></iframe>';
 	</script>
-</body>
-</html>
+ {% endblock content %}
