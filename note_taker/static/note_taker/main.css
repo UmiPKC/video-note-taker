@@ -1,1 +1,51 @@
-main.css
+body {
+	margin: 0;
+}
+
+nav {
+	display: inline;
+	margin: 0;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #666699;
+}
+
+li {
+	float: left;
+
+}
+
+li a {
+	display:  block;
+	color: white;
+	text-align: center;
+	padding:  14px 16px;
+	text-decoration: none;
+}
+
+li a.home {
+	font-weight: bold;
+}
+
+li a:hover {
+	background-color: #52527a;
+}
+
+main {
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+h1.notebooktitle {
+	color: #003399;
+}
+
+div.vidcontainer {
+	margin-left: auto;
+	margin-right: auto;
+}

@@ -1,8 +1,8 @@
 {% extends "note_taker/base.html" %}
 {% block content%}
 
-	<h1 style="color: skyblue;">{{ notebook.title }}</h1>
-	<div>
+	<h1 class="notebooktitle">{{ notebook.title }}</h1>
+	<div class="vidcontainer">
 		<iframe id="your-iframe" 
 			width="560" 
 			height="315" 
@@ -14,6 +14,10 @@
 			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" 
 			allowfullscreen>
 		</iframe>
+	</div>
+
+	<div class="vidinfo">
+		<p>Username | Description here!!!!! | Public</p>
 	</div>
 
 	<div>
