@@ -49,3 +49,9 @@ div.vidcontainer {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+div.notecontainer {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}

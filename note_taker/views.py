@@ -23,12 +23,12 @@ def notebook(request):
 		form = NoteForm()	
 
 	context = {
-		'notebook': Notebook.objects.all().first(),
+		'notebook': Notebook.objects.all(),
 		'notes': Note.objects.all(),
 		'form': form,
 	}
 
-	return render(request, 'note_taker/notebook.html', context)
+	return render(request, 'note_taker/dev_land.html', context)
 
 def new_notebook(request):
 	if request.method == 'POST':
@@ -91,7 +91,7 @@ def test_notebook(request, id_num):
 		'form': form,
 	}
 
-	return render(request, 'note_taker/test_notebook.html', context)
+	return render(request, 'note_taker/notebook.html', context)
 
 
 

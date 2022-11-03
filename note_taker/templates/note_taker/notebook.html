@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="vidinfo">
-		<p>Username | Description here!!!!! | Public</p>
+		<p>{{ notebook.author }} | {{ notebook.description }} | {{ notebook.privacy }}</p>
 	</div>
 
 	<div>
@@ -35,6 +35,7 @@
 		<label for="{{ form.content.id_for_label }}">Content:</label>
 		<textarea name="content" cols="40" rows="1" class="textarea form-control" required id="id_content"></textarea>
 
+
 		<label for="id_notebook" class=" requiredField">Notebook<span class="asteriskField">*</span></label>  
 		<select name="notebook" class="select form-control" required id="id_notebook"> 
 			<option value="" selected=""> ------ </option> 
@@ -45,8 +46,13 @@
 	</form>
 	
 	{% for note in notes %}
-		<div style="border-bottom: 4px dotted pink;">
-			<p style="color: magenta;">{{ note.timestamp }} -- {{ note.content }}</p>
+		<div class="notecontainer">
+			<div style="display: inline;">
+				<p style="color: magenta;">{{ note.timestamp }} -- {{ note.content }}</p>
+			</div>
+			<div>
+				<p>Username</p>
+			</div>
 		</div>
 	{% endfor %}
 
