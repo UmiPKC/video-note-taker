@@ -1,0 +1,13 @@
+{% extends "note_taker/base.html" %}
+{% block content%}
+
+	{% for book in notebook %}
+		<a href="{% url 'note-taker-notebook-test' book.notebook_id %}"><div id="notebookDiv" style="border: 1px solid black; margin-top: 15px; padding: 5px; box-shadow: 2px 4px gray;">
+			<img src = "http://img.youtube.com/vi/{{ book.youtube_id }}/0.jpg">
+			</br><p>{{ book.title }}</p>
+			</br><p>{{ book.description }}</p>
+			<p>{{ book.author }} - {{ book.date_created }}</p>	
+		</div></a>
+	{% endfor %}
+
+{% endblock content %}

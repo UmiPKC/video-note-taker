@@ -28,7 +28,7 @@ def notebook(request):
 		'form': form,
 	}
 
-	return render(request, 'note_taker/dev_land.html', context)
+	return render(request, 'note_taker/notebook_list.html', context)
 
 def new_notebook(request):
 	if request.method == 'POST':

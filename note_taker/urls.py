@@ -7,7 +7,6 @@ urlpatterns = [
 	path('', views.notebook, name="note-taker-notebook"),
 	path('notebook/<str:id_num>/', views.test_notebook, name="note-taker-notebook-test"),
 	path('new/', views.new_notebook, name="notebook-new"),
-	path('dev/', views.dev_homepage, name="dev-home"),
 
 ]
 
