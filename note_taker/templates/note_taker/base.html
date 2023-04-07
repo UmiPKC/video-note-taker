@@ -10,12 +10,9 @@
 
 	<nav>
 		<ul>
-			<li><a href="{% url 'note-taker-notebook' %} class="home">vodreview.me</a></li>
-			<li><a href="#">My Notebooks</a></li>
-			<li><a href="#">Login</a></li>
-			<li><a href="#">Logout</a></li>
-			<li><a href="#">Profile</a></li>
-			<li><a href="#">Settings</a></li>
+			<li><a href="{% url 'note-taker-notebook-list' %}">vodreview.me</a></li>
+			<li><a href="{% url 'note-taker-notebook-list' %}">My Notebooks</a></li>
+			<li><a href="{% url 'notebook-new' %}">New Notebook</a></li>
 		</ul>
 	</nav>
 

@@ -1,14 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Make your notebook</title>
-</head>
-<body>
-
-	<a href="{% url 'note-taker-notebook' %}">Home</a>
-	<a href="{% url 'dev-home' %}">Dev home</a> </br>
+{% extends "note_taker/base.html" %}
+{% block content%}
+	<a href="{% url 'note-taker-notebook-list' %}">Home</a>
 
 	<label for="youtube_link">Youtube Video Link:</label>
 	<input type="text" id="youtube_link">
@@ -62,5 +54,5 @@
 		/*const iframeMarkup = '<iframe width="560" height="315" src="//www.youtube.com/embed/' 
 		  + videoId + '" frameborder="0" allowfullscreen></iframe>'; */
 	</script>
-</body>
-</html>
+	
+{% endblock content %}
