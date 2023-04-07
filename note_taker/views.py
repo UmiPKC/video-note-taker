@@ -6,7 +6,7 @@ import random
 from .models import Notebook, Note
 from .forms import NoteForm, NotebookForm
 
-#admin, testing321
+#administrator/umi, testing321
 
 # Create your views here.
 def notebook_list(request):
@@ -25,6 +25,7 @@ def notebook_list(request):
 	}
 
 	return render(request, 'note_taker/notebook_list.html', context)
+
 
 def notebook(request, id_num):
 	if request.method == 'POST':
@@ -51,6 +52,7 @@ def notebook(request, id_num):
 
 	return render(request, 'note_taker/notebook.html', context)
 
+
 def new_notebook(request):
 	if request.method == 'POST':
 		form = NotebookForm(request.POST)
@@ -72,7 +74,5 @@ def new_notebook(request):
 		'form': form,
 		'random_id': new_id(),
 	}
-	#future notebook creation page
-	#update Notebook model to include field for youtube link
 	return render(request, 'note_taker/new_notebook.html', context)
 

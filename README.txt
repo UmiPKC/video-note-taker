@@ -21,4 +21,4 @@ What would be nice, but not necessary?
 --Ability to create users so that the site can be used by people other than me.
 --Ability for users to see and edit other users' Notebooks.
 --Ability to set privacy settings/permissions on Notebooks (needed if there are users and Notebooks can be shared).
---Ability to export 'Notebooks' into easily readable, transportal formats (like PDF)
+--Ability to export 'Notebooks' into easily readable, transportable formats (like PDF)
