@@ -18,7 +18,7 @@ class Notebook(models.Model):
 
 class Note(models.Model):
 	timestamp = models.CharField(max_length=100, default="01:27") #for now;
-	raw_timestamp = models.TextField()
+	raw_timestamp = models.IntegerField(default="0")
 	content = models.TextField()
 	date_posted = models.DateTimeField(default=timezone.now)
 	notebook = models.ForeignKey(Notebook, on_delete=models.CASCADE)

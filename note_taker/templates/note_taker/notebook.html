@@ -32,8 +32,8 @@
 		<label for="{{ form.timestamp.id_for_label }}">Timestamp:</label>
 		<input type="text" name="timestamp" maxlength="100" class="textinput textInput form-control" required id="id_timestamp">
 
-		<label for="{{ form.timestamp.id_for_label }}">Raw Timestamp (Seconds):</label>
-		<input type="text" name="raw_timestamp" maxlength="100" class="textinput textInput form-control" required id="id_rawtimestamp">
+		<label for="{{ form.raw_timestamp.id_for_label }}">Raw Timestamp (Seconds):</label>
+		<input type="number" name="raw_timestamp" maxlength="100" class="textinput textInput form-control" required id="id_rawtimestamp">
 
 		<label for="{{ form.content.id_for_label }}">Content:</label>
 		<textarea name="content" cols="40" rows="1" class="textarea form-control" required id="id_content"></textarea>
@@ -49,8 +49,20 @@
 	
 	{% for note in notes %}
 		<div class="notecontainer">
+			<script>
+				function seek() {
+			  	//Need to pass {{note.timestamp}} into JavaScript, convert that into seconds
+			  	//After conversion, use player.seekTo(seconds:Number, allowSeekAhead:Boolean) to have video player seek to the timestamp
+
+			  	raw_timestamp = parseInt("{{ note.raw_timestamp }}");
+			  	//alert(parseInt("{{ note.raw_timestamp }}"));
+			  	player.seekTo(parseInt("{{ note.raw_timestamp }}"), true);
+
+	  			}
+			</script>
 			<div style="display: inline;">
-				<button onclick="seek();"><p style="color: magenta;"><a href="#">{{ note.timestamp }}</a> -- {{ note.content }}</p></button>
+				<button onclick="seek();"><p style="color: magenta;">{{ note.timestamp }}</a> -- {{ note.content }}</p></button>
+				<p id="id_raw_timestamp_second">{{ note.raw_timestamp }}</p>
 			</div>
 			<div>
 				
@@ -111,17 +123,10 @@
 	  function newNote() {
 	  	player.pauseVideo();
 	  	document.getElementById('id_timestamp').value = getVideoTime();
-	  	document.getElementById('id_rawtimestamp').value = player.getCurrentTime();
+	  	document.getElementById('id_rawtimestamp').value = Math.floor(player.getCurrentTime());
 	  }
 
-	  function seek() {
-	  	//Need to pass {{note.timestamp}} into JavaScript, convert that into seconds
-	  	//After conversion, use player.seekTo(seconds:Number, allowSeekAhead:Boolean) to have video player seek to the timestamp
 
-	  	raw_timestamp = parseInt("{{note.raw_timestamp}}");
-	  	player.seekTo(raw_timestamp, True);
-
-	  }
 
 	  function onPlayerReady(event) {
 	    document.getElementById('your-iframe').style.borderColor = '#FF6D00';
