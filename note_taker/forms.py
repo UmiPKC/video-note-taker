@@ -7,7 +7,7 @@ class NoteForm(ModelForm):
 	#notebook = forms.CharField(max_length=100)
 	class Meta:
 		model = Note
-		fields = ['timestamp', 'content', 'notebook']
+		fields = ['timestamp', 'raw_timestamp', 'content', 'notebook']
 
 #Create NoteBookForm
 class NotebookForm(ModelForm):

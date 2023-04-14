@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="vidinfo">
-		<p>{{ notebook.author }} | {{ notebook.description }} | {{ notebook.privacy }}</p>
+		<p>{{ notebook.description }}</p>
 	</div>
 
 	<div>
@@ -32,14 +32,16 @@
 		<label for="{{ form.timestamp.id_for_label }}">Timestamp:</label>
 		<input type="text" name="timestamp" maxlength="100" class="textinput textInput form-control" required id="id_timestamp">
 
+		<label for="{{ form.raw_timestamp.id_for_label }}">Raw Timestamp (Seconds):</label>
+		<input type="number" name="raw_timestamp" maxlength="100" class="textinput textInput form-control" required id="id_rawtimestamp">
+
 		<label for="{{ form.content.id_for_label }}">Content:</label>
 		<textarea name="content" cols="40" rows="1" class="textarea form-control" required id="id_content"></textarea>
 
 
 		<label for="id_notebook" class=" requiredField">Notebook<span class="asteriskField">*</span></label>  
 		<select name="notebook" class="select form-control" required id="id_notebook"> 
-			<option value="" selected=""> ------ </option> 
-			<option value="1">{{ notebook.title }}</option> 
+			<option value="{{ notebook.id }}" selected>{{ notebook.title }}</option> 
 		</select>
 
 		<input type="submit" value="Done">
@@ -47,11 +49,23 @@
 	
 	{% for note in notes %}
 		<div class="notecontainer">
+			<script>
+				function seek() {
+			  	//Need to pass {{note.timestamp}} into JavaScript, convert that into seconds
+			  	//After conversion, use player.seekTo(seconds:Number, allowSeekAhead:Boolean) to have video player seek to the timestamp
+
+			  	raw_timestamp = parseInt("{{ note.raw_timestamp }}");
+			  	//alert(parseInt("{{ note.raw_timestamp }}"));
+			  	player.seekTo(parseInt("{{ note.raw_timestamp }}"), true);
+
+	  			}
+			</script>
 			<div style="display: inline;">
-				<p style="color: magenta;">{{ note.timestamp }} -- {{ note.content }}</p>
+				<button onclick="seek();"><p style="color: magenta;">{{ note.timestamp }}</a> -- {{ note.content }}</p></button>
+				<p id="id_raw_timestamp_second">{{ note.raw_timestamp }}</p>
 			</div>
 			<div>
-				<p>Username</p>
+				
 			</div>
 		</div>
 	{% endfor %}
@@ -109,7 +123,10 @@
 	  function newNote() {
 	  	player.pauseVideo();
 	  	document.getElementById('id_timestamp').value = getVideoTime();
+	  	document.getElementById('id_rawtimestamp').value = Math.floor(player.getCurrentTime());
 	  }
+
+
 
 	  function onPlayerReady(event) {
 	    document.getElementById('your-iframe').style.borderColor = '#FF6D00';
@@ -146,7 +163,6 @@
 	      : null;
 		}
 	    
-	  const videoId = getId('http://www.youtube.com/watch?v=zbYf5_S7oJo');
 	  const iframeMarkup = '<iframe width="560" height="315" src="//www.youtube.com/embed/' 
 	      + videoId + '" frameborder="0" allowfullscreen></iframe>';
 	</script>

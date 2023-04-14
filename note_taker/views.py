@@ -6,14 +6,10 @@ import random
 from .models import Notebook, Note
 from .forms import NoteForm, NotebookForm
 
-#admin, testing321
+#administrator/umi, testing321
 
 # Create your views here.
-def home(request):
-	pass
-	#future landing/home page
-
-def notebook(request):
+def notebook_list(request):
 	if request.method == 'POST':
 		form = NoteForm(request.POST)
 		if form.is_valid():
@@ -30,45 +26,8 @@ def notebook(request):
 
 	return render(request, 'note_taker/notebook_list.html', context)
 
-def new_notebook(request):
-	if request.method == 'POST':
-		form = NotebookForm(request.POST)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect(request.path_info)
-	else:
-		form = NotebookForm()
 
-	def new_id():
-	    random_id = ""
-	    for i in range(0, 4):
-	        random_id += chr(random.randint(48, 57))
-	        random_id += chr(random.randint(65, 90))
-	        random_id += chr(random.randint(97, 122))
-	    return random_id
-
-	context = {
-		'form': form,
-		'random_id': new_id(),
-	}
-	#future notebook creation page
-	#update Notebook model to include field for youtube link
-	return render(request, 'note_taker/new_notebook.html', context)
-
-def my_notebooks(request):
-	pass
-	#future user notebooks page
-
-
-
-def dev_homepage(request):
-	context = {
-		'notebook': Notebook.objects.all(),
-	}
-
-	return render(request, 'note_taker/dev_land.html', context)
-
-def test_notebook(request, id_num):
+def notebook(request, id_num):
 	if request.method == 'POST':
 		form = NoteForm(request.POST)
 		if form.is_valid():
@@ -94,19 +53,26 @@ def test_notebook(request, id_num):
 	return render(request, 'note_taker/notebook.html', context)
 
 
+def new_notebook(request):
+	if request.method == 'POST':
+		form = NotebookForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(request.path_info)
+	else:
+		form = NotebookForm()
 
-#def new_note(request):
-#	if request.method == 'POST':
-#		form = NoteForm(request.POST)
-#		if form.is_valid():
-#			return HttpResponseRedirect('')
-#	else:
-#		form = NoteForm()	
-#	return render(request, 'note_taker/note_form.html', { 'form': form })
+	def new_id():
+	    random_id = ""
+	    for i in range(0, 4):
+	        random_id += chr(random.randint(48, 57))
+	        random_id += chr(random.randint(65, 90))
+	        random_id += chr(random.randint(97, 122))
+	    return random_id
 
+	context = {
+		'form': form,
+		'random_id': new_id(),
+	}
+	return render(request, 'note_taker/new_notebook.html', context)
 
-#class NoteCreate(CreateView):
-#	model = Note
-#	fields = ['timestamp', 'content', 'notebook']
-	#template_name = "note_taker/note_form.html"
-#	template_name = "note_taker/index.html"
