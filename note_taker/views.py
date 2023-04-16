@@ -76,3 +76,7 @@ def new_notebook(request):
 	}
 	return render(request, 'note_taker/new_notebook.html', context)
 
+def delete_notebook(request, id):
+	notebook = Notebook.objects.get(id=id)
+	notebook.delete()
+	return HttpResponseRedirect("notebook_list")

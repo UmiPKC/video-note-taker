@@ -27,7 +27,7 @@
 	{% load crispy_forms_tags %}
 	<form action="" method="post">
 		{% csrf_token %}
-		<!--{{ form|crispy }} -->
+		
 			
 		<label for="{{ form.timestamp.id_for_label }}">Timestamp:</label>
 		<input type="text" name="timestamp" maxlength="100" class="textinput textInput form-control" required id="id_timestamp">
@@ -49,121 +49,116 @@
 	
 	{% for note in notes %}
 		<div class="notecontainer">
-			<script>
-				function seek() {
-			  	//Need to pass {{note.timestamp}} into JavaScript, convert that into seconds
-			  	//After conversion, use player.seekTo(seconds:Number, allowSeekAhead:Boolean) to have video player seek to the timestamp
-
-			  	raw_timestamp = parseInt("{{ note.raw_timestamp }}");
-			  	//alert(parseInt("{{ note.raw_timestamp }}"));
-			  	player.seekTo(parseInt("{{ note.raw_timestamp }}"), true);
-
-	  			}
-			</script>
 			<div style="display: inline;">
-				<button onclick="seek();"><p style="color: magenta;">{{ note.timestamp }}</a> -- {{ note.content }}</p></button>
+				<button onclick="seek({{ note.raw_timestamp }});"><p style="color: magenta;" id='timestamp_content'>{{ note.timestamp }}</a> -- {{ note.content }}</p></button>
 				<p id="id_raw_timestamp_second">{{ note.raw_timestamp }}</p>
-			</div>
-			<div>
-				
+
 			</div>
 		</div>
 	{% endfor %}
 
 	<script type="text/javascript">
-	  var tag = document.createElement('script');
-	  tag.id = 'iframe-demo';
-	  tag.src = 'https://www.youtube.com/iframe_api';
-	  var firstScriptTag = document.getElementsByTagName('script')[0];
-	  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		var tag = document.createElement('script');
+		tag.id = 'iframe-demo';
+		tag.src = 'https://www.youtube.com/iframe_api';
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-	  var player;
-	  function onYouTubeIframeAPIReady() {
-	    player = new YT.Player('your-iframe', {
-	        events: {
-	          'onReady': onPlayerReady,
-	          'onStateChange': onPlayerStateChange
-	        }
-	    });
-	  }
-
-	  function getVideoTime() {
-	  	var raw_time = player.getCurrentTime();
-	  	time_hour = parseInt(raw_time / 3600);
-	  	time_min = parseInt((raw_time % 3600) / 60);
-	  	time_sec = parseInt((raw_time % 3600) % 60);
-
-	  	var time_string;
-	  	var zero_colon_hour;
-	  	var zero_colon_min;
-	  	var zero_colon_sec;
-
-	  	if (time_hour >= 10) {
-	  		zero_colon_hour = "";
-	  	} else {
-	  		zero_colon_hour = "0";
-	  	}
-
-	  	if (time_min >= 10) {
-	  		zero_colon_min = ":";
-	  	} else {
-	  		zero_colon_min = ":0";
-	  	}
-
-	  	if (time_sec >= 10) {
-	  		zero_colon_sec = ":";
-	  	} else {
-	  		zero_colon_sec = ":0";
-	  	}
-
-	  	time_string = zero_colon_hour + time_hour + zero_colon_min + time_min + zero_colon_sec + time_sec;
-	  	return time_string;
-	  }
-	  
-	  function newNote() {
-	  	player.pauseVideo();
-	  	document.getElementById('id_timestamp').value = getVideoTime();
-	  	document.getElementById('id_rawtimestamp').value = Math.floor(player.getCurrentTime());
-	  }
-
-
-
-	  function onPlayerReady(event) {
-	    document.getElementById('your-iframe').style.borderColor = '#FF6D00';
-	  }
-	  function changeBorderColor(playerStatus) {
-	    var color;
-	    if (playerStatus == -1) {
-	      color = "#37474F"; // unstarted = gray
-	    } else if (playerStatus == 0) {
-	      color = "#FFFF00"; // ended = yellow
-	    } else if (playerStatus == 1) {
-	      color = "#33691E"; // playing = green
-	    } else if (playerStatus == 2) {
-	      color = "#DD2C00"; // paused = red
-	    } else if (playerStatus == 3) {
-	      color = "#AA00FF"; // buffering = purple
-	    } else if (playerStatus == 5) {
-	      color = "#FF6DOO"; // video cued = orange
-	    }
-	    if (color) {
-	      document.getElementById('your-iframe').style.borderColor = color;
-	    }
-	  }
-	  function onPlayerStateChange(event) {
-	    changeBorderColor(event.data);
-	  }
-
-	  function getId(url) {
-	    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-	    const match = url.match(regExp);
-
-	    return (match && match[2].length === 11)
-	      ? match[2]
-	      : null;
+		var player;
+		function onYouTubeIframeAPIReady() {
+		player = new YT.Player('your-iframe', {
+		    events: {
+		      'onReady': onPlayerReady,
+		      'onStateChange': onPlayerStateChange
+		    }
+		});
 		}
-	    
-	  const iframeMarkup = '<iframe width="560" height="315" src="//www.youtube.com/embed/' 
-	      + videoId + '" frameborder="0" allowfullscreen></iframe>';
+
+		function getVideoTime() {
+			var raw_time = player.getCurrentTime();
+			time_hour = parseInt(raw_time / 3600);
+			time_min = parseInt((raw_time % 3600) / 60);
+			time_sec = parseInt((raw_time % 3600) % 60);
+
+			var time_string;
+			var zero_colon_hour;
+			var zero_colon_min;
+			var zero_colon_sec;
+
+			if (time_hour >= 10) {
+				zero_colon_hour = "";
+			} else {
+				zero_colon_hour = "0";
+			}
+
+			if (time_min >= 10) {
+				zero_colon_min = ":";
+			} else {
+				zero_colon_min = ":0";
+			}
+
+			if (time_sec >= 10) {
+				zero_colon_sec = ":";
+			} else {
+				zero_colon_sec = ":0";
+			}
+
+			time_string = zero_colon_hour + time_hour + zero_colon_min + time_min + zero_colon_sec + time_sec;
+			return time_string;
+		}
+
+		function newNote() {
+			player.pauseVideo();
+			document.getElementById('id_timestamp').value = getVideoTime();
+			document.getElementById('id_rawtimestamp').value = Math.floor(player.getCurrentTime());
+		}
+
+		function seek(timestamp_string) {
+			//Need to pass {{note.timestamp}} into JavaScript, convert that into seconds
+			//After conversion, use player.seekTo(seconds:Number, allowSeekAhead:Boolean) to have video player seek to the timestamp
+			//timestamp_string: {{ note.timestamp }} value
+
+			raw_timestamp = parseInt(timestamp_string);
+			player.seekTo(raw_timestamp, true);
+		}
+
+
+		function onPlayerReady(event) {
+		document.getElementById('your-iframe').style.borderColor = '#FF6D00';
+		}
+		function changeBorderColor(playerStatus) {
+		var color;
+		if (playerStatus == -1) {
+		  color = "#37474F"; // unstarted = gray
+		} else if (playerStatus == 0) {
+		  color = "#FFFF00"; // ended = yellow
+		} else if (playerStatus == 1) {
+		  color = "#33691E"; // playing = green
+		} else if (playerStatus == 2) {
+		  color = "#DD2C00"; // paused = red
+		} else if (playerStatus == 3) {
+		  color = "#AA00FF"; // buffering = purple
+		} else if (playerStatus == 5) {
+		  color = "#FF6DOO"; // video cued = orange
+		}
+		if (color) {
+		  document.getElementById('your-iframe').style.borderColor = color;
+		}
+		}
+		function onPlayerStateChange(event) {
+		changeBorderColor(event.data);
+		}
+
+		function getId(url) {
+		const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+		const match = url.match(regExp);
+
+		return (match && match[2].length === 11)
+		  ? match[2]
+		  : null;
+		}
+
+		const iframeMarkup = '<iframe width="560" height="315" src="//www.youtube.com/embed/' 
+		  + videoId + '" frameborder="0" allowfullscreen></iframe>';
 	</script>
  {% endblock content %}

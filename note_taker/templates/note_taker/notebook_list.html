@@ -2,12 +2,14 @@
 {% block content%}
 
 	{% for book in notebook %}
-		<a href="{% url 'note-taker-notebook' book.notebook_id %}"><div id="notebookDiv" style="border: 1px solid black; margin-top: 15px; padding: 5px; box-shadow: 2px 4px gray;">
+		<div id="notebookDiv" style="border: 1px solid black; margin-top: 15px; padding: 5px; box-shadow: 2px 4px gray;">
 			<img src = "http://img.youtube.com/vi/{{ book.youtube_id }}/0.jpg">
-			</br><p>{{ book.title }}</p>
+			</br><a href="{% url 'note-taker-notebook' book.notebook_id %}"><p>{{ book.title }}</p></a>
 			</br><p>{{ book.description }}</p>
 			<p>{{ book.date_created }}</p>	
-		</div></a>
+			</br><a href="{% url 'delete-notebook' id=book.id %}"><p>Delete</p></a>
+
+		</div>
 	{% endfor %}
 
 {% endblock content %}
