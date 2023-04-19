@@ -32,8 +32,8 @@
 		<label for="{{ form.timestamp.id_for_label }}">Timestamp:</label>
 		<input type="text" name="timestamp" maxlength="100" class="textinput textInput form-control" required id="id_timestamp">
 
-		<label for="{{ form.raw_timestamp.id_for_label }}">Raw Timestamp (Seconds):</label>
-		<input type="number" name="raw_timestamp" maxlength="100" class="textinput textInput form-control" required id="id_rawtimestamp">
+		<!--raw timestamp value of video in seconds-->
+		<input type="hidden" name="raw_timestamp" maxlength="100" class="textinput textInput form-control" required id="id_rawtimestamp">
 
 		<label for="{{ form.content.id_for_label }}">Content:</label>
 		<textarea name="content" cols="40" rows="1" class="textarea form-control" required id="id_content"></textarea>
@@ -51,7 +51,7 @@
 		<div class="notecontainer">
 			<div style="display: inline;">
 				<button onclick="seek({{ note.raw_timestamp }});"><p style="color: magenta;" id='timestamp_content'>{{ note.timestamp }}</a> -- {{ note.content }}</p></button>
-				<p id="id_raw_timestamp_second">{{ note.raw_timestamp }}</p>
+				</br><a href="{% url 'delete-note' id=note.id %}"><p>Delete</p></a>
 
 			</div>
 		</div>

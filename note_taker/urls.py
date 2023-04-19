@@ -10,5 +10,7 @@ urlpatterns = [
 	path('new/', views.new_notebook, name="notebook-new"),
 	#delete notebook
 	path('delete-notebook/<int:id>/', views.delete_notebook, name="delete-notebook"),
+	#delete note
+	path('delete-note/<int:id>/', views.delete_note, name="delete-note"),
 
 ]

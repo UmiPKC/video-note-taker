@@ -58,17 +58,17 @@ def new_notebook(request):
 		form = NotebookForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect(request.path_info)
+			return HttpResponseRedirect("/")
 	else:
 		form = NotebookForm()
 
 	def new_id():
-	    random_id = ""
-	    for i in range(0, 4):
-	        random_id += chr(random.randint(48, 57))
-	        random_id += chr(random.randint(65, 90))
-	        random_id += chr(random.randint(97, 122))
-	    return random_id
+		random_id = ""
+		for i in range(0, 4):
+			random_id += chr(random.randint(48, 57))
+			random_id += chr(random.randint(65, 90))
+			random_id += chr(random.randint(97, 122))
+			return random_id
 
 	context = {
 		'form': form,
@@ -79,4 +79,9 @@ def new_notebook(request):
 def delete_notebook(request, id):
 	notebook = Notebook.objects.get(id=id)
 	notebook.delete()
-	return HttpResponseRedirect("notebook_list")
+	return HttpResponseRedirect("/")
+
+def delete_note(request, id):
+	note = Note.objects.get(id=id)
+	note.delete()
+	return HttpResponseRedirect("/")
