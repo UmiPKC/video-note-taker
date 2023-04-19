@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import CreateView
 from django.http import HttpResponseRedirect
 import random
@@ -79,9 +79,10 @@ def new_notebook(request):
 def delete_notebook(request, id):
 	notebook = Notebook.objects.get(id=id)
 	notebook.delete()
-	return HttpResponseRedirect("/")
+	return redirect("note-taker-notebook-list")
 
 def delete_note(request, id):
 	note = Note.objects.get(id=id)
 	note.delete()
-	return HttpResponseRedirect("/")
+	#I'm close to redirecting to the current notebook. Need a way to get the correct notebook ID so i can redirect to the right page
+	return redirect("note-taker-notebook", note.notebook_id)

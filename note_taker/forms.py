@@ -13,4 +13,4 @@ class NoteForm(ModelForm):
 class NotebookForm(ModelForm):
 	class Meta:
 		model = Notebook
-		fields = ['title', 'author', 'youtube_id', 'notebook_id'] #'youtube_id'
+		fields = ['title', 'author', 'youtube_id', 'notebook_id', 'description'] #'youtube_id'

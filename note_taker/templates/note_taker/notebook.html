@@ -38,9 +38,8 @@
 		<label for="{{ form.content.id_for_label }}">Content:</label>
 		<textarea name="content" cols="40" rows="1" class="textarea form-control" required id="id_content"></textarea>
 
-
-		<label for="id_notebook" class=" requiredField">Notebook<span class="asteriskField">*</span></label>  
-		<select name="notebook" class="select form-control" required id="id_notebook"> 
+		<!--Notebook ID-->
+		<select hidden name="notebook" class="select form-control" required id="id_notebook"> 
 			<option value="{{ notebook.id }}" selected>{{ notebook.title }}</option> 
 		</select>
 
