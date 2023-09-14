@@ -40,7 +40,7 @@
 
 		<!--Notebook ID-->
 		<select hidden name="notebook" class="select form-control" required id="id_notebook"> 
-			<option value="{{ notebook.id }}" selected>{{ notebook.title }}</option> 
+			<option value="{{ notebook.notebook_id }}" selected>{{ notebook.title }}</option> 
 		</select>
 
 		<input type="submit" value="Done">
@@ -49,7 +49,7 @@
 	{% for note in notes %}
 		<div class="notecontainer">
 			<div style="display: inline;">
-				<button onclick="seek({{ note.raw_timestamp }});"><p style="color: magenta;" id='timestamp_content'>{{ note.timestamp }}</a> -- {{ note.content }}</p></button>
+				<!--<button onclick="seek({{ note.raw_timestamp }});"><p style="color: magenta;" id='timestamp_content'>{{ note.timestamp }}</a> -- {{ note.content }}</p></button>-->
 				</br><a href="{% url 'delete-note' id=note.id %}"><p>Delete</p></a>
 
 			</div>
