@@ -29,12 +29,14 @@
 		{% csrf_token %}
 		
 			
+		<!--timestamp value in hh:mm:ss format-->
 		<label for="{{ form.timestamp.id_for_label }}">Timestamp:</label>
 		<input type="text" name="timestamp" maxlength="100" class="textinput textInput form-control" required id="id_timestamp">
 
 		<!--raw timestamp value of video in seconds-->
 		<input type="hidden" name="raw_timestamp" maxlength="100" class="textinput textInput form-control" required id="id_rawtimestamp">
 
+		<!--content-->
 		<label for="{{ form.content.id_for_label }}">Content:</label>
 		<textarea name="content" cols="40" rows="1" class="textarea form-control" required id="id_content"></textarea>
 
@@ -43,13 +45,18 @@
 			<option value="{{ notebook.notebook_id }}" selected>{{ notebook.title }}</option> 
 		</select>
 
+		<!--date posted-->
+		<input type="date" name="date_posted" hidden required id="id_date_posted">
+
 		<input type="submit" value="Done">
 	</form>
 	
 	{% for note in notes %}
 		<div class="notecontainer">
 			<div style="display: inline;">
-				<!--<button onclick="seek({{ note.raw_timestamp }});"><p style="color: magenta;" id='timestamp_content'>{{ note.timestamp }}</a> -- {{ note.content }}</p></button>-->
+				<!-- <button onclick="seek( {{ note.raw_timestamp }} );"></button>-->
+				<p style="color: magenta;" id='timestamp_content'>{{ note.timestamp }}</a> -- {{ note.content }}</p>
+				
 				</br><a href="{% url 'delete-note' id=note.id %}"><p>Delete</p></a>
 
 			</div>
@@ -111,6 +118,8 @@
 			document.getElementById('id_timestamp').value = getVideoTime();
 			document.getElementById('id_rawtimestamp').value = Math.floor(player.getCurrentTime());
 		}
+
+		document.getElementById('id_date_posted').valueAsDate = new Date();
 
 		function seek(timestamp_string) {
 			//Need to pass {{note.timestamp}} into JavaScript, convert that into seconds
